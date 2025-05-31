@@ -51,7 +51,7 @@ const crearPaciente = async (req, res) => {
 
 const actualizarPaciente = async (req, res) => {
     try {
-        const actualizado = await Paciente.actualizar(req.params.id, req.body)
+        const actualizado = await Paciente.actualizarPaciente(req.params.id, req.body)
         if (!actualizado) return res.status(404).json({ error: 'Paciente no encontrado' })
         res.json(actualizado);
     } catch (err) {

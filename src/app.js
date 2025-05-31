@@ -7,6 +7,7 @@ const incapacidadRoutes = require('./routes/IncapacidadRoutes')
 const autorizacionMedicamentos = require('./routes/autorizacionMedicamentosRoutes')
 const autorizacionProcedimientoExamen = require('./routes/autorizacionProcedimientoExamenRoutes')
 const auth = require('./routes/authRoutes')
+const deepseekRoutes = require('./routes/deepseekRoutes')
 
 const app = express()
 app.use(cors())
@@ -19,5 +20,6 @@ app.use('/api/incapacidades', incapacidadRoutes)
 app.use('/api/autorizacion-medicamentos', autorizacionMedicamentos)
 app.use('/api/autorizacion-procedimiento-examen', autorizacionProcedimientoExamen)
 app.use('/api/auth', auth)
+app.use('/api/chat', deepseekRoutes);
 
 module.exports = app
