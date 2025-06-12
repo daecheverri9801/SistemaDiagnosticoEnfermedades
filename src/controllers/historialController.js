@@ -17,6 +17,23 @@ const obtenerHistorial = async (req, res) => {
     }
 }
 
+const obtenerHistorialId = async (req, res) => {
+    const { idPaciente, idHistorial } = req.params
+
+    try {
+        const historial = await HistorialFacade.obtenerHistorialPorId(idPaciente, idHistorial)
+
+        if (!historial || historial.length === 0) {
+            return res.status(404).json({ mensaje: 'No se encontró historial para este paciente.' });
+        }
+
+        res.json(historial)
+
+    } catch (error) {
+        res.status(500).json({ mensaje: 'Error al obtener historial clínico controller' });
+    }
+}
+
 const crearHistorial = async (req, res) => {
     const { idPaciente, idMedico, motivo, observaciones, codigo_icd, descripcion, tratamiento } = req.body
 
@@ -61,5 +78,6 @@ module.exports = {
     obtenerHistorial,
     crearHistorial,
     actualizarHistorial,
-    eliminarConsulta
+    eliminarConsulta,
+    obtenerHistorialId
 }

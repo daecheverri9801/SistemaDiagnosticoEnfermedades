@@ -43,6 +43,16 @@ class PacienteBuilder {
         return this;
     }
 
+    setCelular(celular) {
+        this.paciente.celular = celular;
+        return this;
+    }
+
+    setDireccion(direccion) {
+        this.paciente.direccion = direccion;
+        return this;
+    }
+
     build() {
         return this.paciente;
     }

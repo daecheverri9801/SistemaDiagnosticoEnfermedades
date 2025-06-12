@@ -1,11 +1,11 @@
 const db = require('../config/db')
 
 const crearPaciente = async (paciente) => {
-    const { usuario, contraseña, nombre, cedula, correo_electronico, idauth } = paciente;
+    const { usuario, contraseña, nombre, cedula, correo_electronico, idauth, celular, direccion } = paciente;
     const resultado = await db.query(
-        `INSERT INTO Paciente (usuario, contraseña, nombre, cedula, correo_electronico, idauth)
-        VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-        [usuario, contraseña, nombre, cedula, correo_electronico, idauth]
+        `INSERT INTO Paciente (usuario, contraseña, nombre, cedula, correo_electronico, idauth, celular, direccion)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
+        [usuario, contraseña, nombre, cedula, correo_electronico, idauth, celular, direccion]
     )
     return resultado.rows[0]
 }
@@ -21,13 +21,17 @@ const obtenerPacientePorId = async (id) => {
 }
 
 const actualizarPaciente = async (id, datos) => {
-    const { usuario, contraseña, nombre, cedula, correo_electronico } = datos
+    try {
+           const { correo_electronico, celular, direccion } = datos
     const res = await db.query(
-        `UPDATE Paciente SET usuario=$1, contraseña=$2, nombre=$3, cedula=$4, correo_electronico=$5
-       WHERE id_paciente=$6 RETURNING *`,
-        [usuario, contraseña, nombre, cedula, correo_electronico, id]
+        `UPDATE Paciente SET correo_electronico=$1, celular=$2, direccion=$3
+       WHERE id_paciente=$4 RETURNING *`,
+        [correo_electronico, celular, direccion, id]
     )
-    return res.rows[0]
+    return res.rows[0] 
+    } catch (error) {
+        res.status(500).json({ error: 'Error al eliminar paciente model' })
+    }
 }
 
 const eliminar = async (id) => {

@@ -1,6 +1,6 @@
 tabla paciente
 CREATE TABLE paciente (
-    id_paciente INTEGER PRIMARY KEY DEFAULT nextval('paciente_seq'),
+    id_paciente SERIAL PRIMARY KEY,
     usuario VARCHAR(50),
     contraseña VARCHAR(100),
     nombre VARCHAR(100),
@@ -12,7 +12,7 @@ CREATE TABLE paciente (
 
 tabla medico
 CREATE TABLE medico (
-    id_medico INTEGER PRIMARY KEY DEFAULT nextval('medico_seq'),
+    id_medico SERIAL PRIMARY KEY,
     nombre VARCHAR(100),
     especialidad VARCHAR(100),
     registro_medico VARCHAR(50),
@@ -22,14 +22,14 @@ CREATE TABLE medico (
 
 tabla historial_clinico
 CREATE TABLE historial_clinico (
-    id_historial INTEGER PRIMARY KEY DEFAULT nextval('historial_seq'),
+    id_historial SERIAL PRIMARY KEY,
     id_paciente INTEGER REFERENCES paciente(id_paciente),
     fecha_creacion TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 tabla consulta
 CREATE TABLE consulta (
-    id_consulta INTEGER PRIMARY KEY DEFAULT nextval('consulta_seq'),
+    id_consulta ISERIAL PRIMARY KEY,
     id_historial INTEGER REFERENCES historial_clinico(id_historial),
     id_medico INTEGER REFERENCES medico(id_medico),
     fecha_consulta TIMESTAMP WITHOUT TIME ZONE,
@@ -38,7 +38,7 @@ CREATE TABLE consulta (
 );
 tabla diagnostico
 CREATE TABLE diagnostico (
-    id_diagnostico INTEGER PRIMARY KEY DEFAULT nextval('diagnostico_seq'),
+    id_diagnostico SERIAL PRIMARY KEY,
     id_consulta INTEGER REFERENCES consulta(id_consulta),
     codigo_icd VARCHAR(20),
     description TEXT,
@@ -47,7 +47,7 @@ CREATE TABLE diagnostico (
 
 tabla autorizacion_examen_procedimiento
 CREATE TABLE autorizacion_examen_procedimiento (
-    id_autorizacion INTEGER PRIMARY KEY DEFAULT nextval('autorizacion_examen_seq'),
+    id_autorizacion SERIAL PRIMARY KEY,
     id_paciente INTEGER REFERENCES paciente(id_paciente),
     id_medico INTEGER REFERENCES medico(id_medico),
     id_consulta INTEGER REFERENCES consulta(id_consulta),
@@ -61,7 +61,7 @@ CREATE TABLE autorizacion_examen_procedimiento (
 
 tabla autorizacion_medicamento
 CREATE TABLE autorizacion_medicamento (
-    id_autorizacion INTEGER PRIMARY KEY DEFAULT nextval('autorizacion_medicamento_seq'),
+    id_autorizacion SERIAL PRIMARY KEY,
     id_paciente INTEGER REFERENCES paciente(id_paciente),
     id_medico INTEGER REFERENCES medico(id_medico),
     id_consulta INTEGER REFERENCES consulta(id_consulta),
@@ -77,7 +77,7 @@ CREATE TABLE autorizacion_medicamento (
 
 tabla incapacidad_medica
 CREATE TABLE incapacidad_medica (
-    id_incapacidad INTEGER PRIMARY KEY DEFAULT nextval('incapacidad_seq'),
+    id_incapacidad SERIAL PRIMARY KEY,
     id_paciente INTEGER REFERENCES paciente(id_paciente),
     id_medico INTEGER REFERENCES medico(id_medico),
     id_consulta INTEGER REFERENCES consulta(id_consulta),
@@ -92,7 +92,7 @@ CREATE TABLE incapacidad_medica (
 
 tabla recuperacion_contraseña
 CREATE TABLE recuperacion_contraseña (
-    id_recuperacion INTEGER PRIMARY KEY DEFAULT nextval('recuperacion_seq'),
+    id_recuperacion SERIAL PRIMARY KEY,
     id_paciente INTEGER REFERENCES paciente(id_paciente),
     token VARCHAR(100),
     fecha_creacion TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,

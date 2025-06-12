@@ -85,7 +85,17 @@ const obtenerIncapacidadesPorPaciente = async (req, res) => {
 }
 
 const crearIncapacidadMedica = async (req, res) => {
-    const { idPaciente, idMedico, idConsulta, fechaInicio, fechaFin, diasIncapacidad, diagnostico, recomendaciones } = req.body
+    const { idPaciente, idMedico, idConsulta, fechaInicio, fechaFin, diagnostico, recomendaciones } = req.body
+
+    const inicio = new Date(fechaInicio);
+    const fin = new Date(fechaFin);
+    const diferenciaMs = fin - inicio;
+
+    if (isNaN(inicio) || isNaN(fin) || diferenciaMs < 0) {
+      return res.status(400).json({ mensaje: 'Fechas inválidas: la fecha de fin debe ser posterior a la de inicio' });
+    }
+
+    const diasIncapacidad = Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24)) + 1;
 
     try {
         const nuevaIncapacidad = await incapacidadMedica.crearIncapacidadMedica(idPaciente, idMedico, idConsulta, fechaInicio, fechaFin, diasIncapacidad, diagnostico, recomendaciones)

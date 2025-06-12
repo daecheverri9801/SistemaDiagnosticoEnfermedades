@@ -21,6 +21,18 @@ const obtenerHistorialPorPaciente = async (idPaciente) => {
     }
 }
 
+const obtenerHistorialPorId = async (idPaciente, idHistorial) => {
+    try {
+        const historial = await HistorialClinicoModel.obtenerHistorialPorId(idPaciente, idHistorial);
+        if (!historial || historial.length === 0) {
+            throw new Error('No se encontró historial con este ID')
+        }
+        return historial
+    } catch (error) {
+        throw new Error('Error al obtener historial clínico...')   
+    }
+}
+
 const actualizarHistorial = async (idConsulta, motivo, observaciones) => {
     try {
         const consultaActualizada = await HistorialClinicoModel.actualizarHistorial(idConsulta, motivo, observaciones)
@@ -43,5 +55,6 @@ module.exports = {
     crearHistorial,
     obtenerHistorialPorPaciente,
     actualizarHistorial,
-    eliminarConsulta
+    eliminarConsulta,
+    obtenerHistorialPorId
 }

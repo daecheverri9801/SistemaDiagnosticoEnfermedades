@@ -1,4 +1,5 @@
 const Paciente = require('../models/pacienteModel');
+const Historial_Clinico = require('../models/historialModel')
 const PacienteBuilder = require('../services/builder/pacienteBuilder');
 
 const listarPacientes = async (req, res) => {
@@ -28,7 +29,7 @@ const crearPaciente = async (req, res) => {
     try {
         const {
             usuario, nombre, cedula, correo_electronico, contraseña,
-            telefono, fecha_nacimiento, idauth
+            telefono, fecha_nacimiento, idauth, celular, direccion
         } = req.body;
 
         const paciente = new PacienteBuilder()
@@ -40,6 +41,8 @@ const crearPaciente = async (req, res) => {
             .setTelefono(telefono)
             .setFechaNacimiento(fecha_nacimiento)
             .setIdAuth(idauth)
+            .setCelular(celular)
+            .setDireccion(direccion)
             .build();
 
         const nuevoPaciente = await Paciente.crearPaciente(paciente)
@@ -55,7 +58,7 @@ const actualizarPaciente = async (req, res) => {
         if (!actualizado) return res.status(404).json({ error: 'Paciente no encontrado' })
         res.json(actualizado);
     } catch (err) {
-        res.status(500).json({ error: 'Error al actualizar paciente' })
+        res.status(500).json({ error: 'Error al actualizar paciente controller' })
     }
 }
 

@@ -4,6 +4,8 @@ const controller = require('../controllers/historialController')
 
 router.get('/:id', controller.obtenerHistorial)
 
+router.get('/:idPaciente/:idHistorial', controller.obtenerHistorialId)
+
 router.post('/', controller.crearHistorial)
 
 router.put('/:idConsulta', controller.actualizarHistorial)

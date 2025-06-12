@@ -22,6 +22,28 @@ const obtenerHistorialPorPaciente = async (idPaciente) => {
     return resultado.rows
 }
 
+const obtenerHistorialPorId = async (idPaciente, idHistorial) => {
+    const resultado = await db.query(`
+    SELECT
+      hc.id_historial,
+      c.id_consulta,
+      c.fecha_consulta,
+      c.motivo,
+      c.observaciones,
+      d.id_diagnostico,
+      d.codigo_icd,
+      d.descripcion,
+      d.tratamiento
+    FROM Historial_Clinico hc
+    INNER JOIN Consulta c ON hc.id_historial = c.id_historial
+    LEFT JOIN Diagnostico d ON c.id_consulta = d.id_consulta
+    WHERE hc.id_paciente = $1 AND hc.id_historial = $2
+    ORDER BY c.fecha_consulta DESC
+        `, [idPaciente, idHistorial]
+    )
+    return resultado.rows
+}
+
 const crearHistorial = async (idPaciente, idMedico, motivo, observaciones, codigo_icd, descripcion, tratamiento) => {
     const respuestaHistorial = await db.query(
         `INSERT INTO Historial_Clinico (id_paciente) VALUES ($1) RETURNING id_historial`,
@@ -68,5 +90,6 @@ module.exports = {
     obtenerHistorialPorPaciente,
     crearHistorial,
     actualizarHistorial,
-    eliminarConsulta
+    eliminarConsulta,
+    obtenerHistorialPorId
 }
