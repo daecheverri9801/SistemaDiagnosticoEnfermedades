@@ -8,7 +8,6 @@ const obtenerHistorialPorPaciente = async (idPaciente) => {
       c.fecha_consulta,
       c.motivo,
       c.observaciones,
-      d.id_diagnostico,
       d.codigo_icd,
       d.descripcion,
       d.tratamiento
@@ -30,7 +29,6 @@ const obtenerHistorialPorId = async (idPaciente, idHistorial) => {
       c.fecha_consulta,
       c.motivo,
       c.observaciones,
-      d.id_diagnostico,
       d.codigo_icd,
       d.descripcion,
       d.tratamiento
