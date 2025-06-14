@@ -74,7 +74,7 @@ const obtenerIncapacidadesPorPaciente = async (req, res) => {
         const incapacidades = await incapacidadMedica.obtenerIncapacidadesPorPaciente(id)
 
         if (!incapacidades || incapacidades.length === 0) {
-            return res.status(404).json({ mensaje: 'No se encontraron incapacidades para este paciente.' });
+            return res.status(404).json({ mensaje: 'No hay incapacidades activas para el paciente o ya expiraron.' });
         }
 
         res.json(incapacidades)

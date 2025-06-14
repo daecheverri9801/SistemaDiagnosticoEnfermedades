@@ -1,4 +1,5 @@
 const { OLLAMA_URL } = require('../../config/ollamaConfig')
+const DeepSeekClient = require('./client')
 
 const generarRespuesta = async (sintomas, nombre_paciente, edad, sexo, Act_Fisica, peso, estado_civil, ocupacion, model) => {
 
@@ -59,26 +60,7 @@ const generarRespuesta = async (sintomas, nombre_paciente, edad, sexo, Act_Fisic
     No incluyas advertencias legales, tampoco quiero que incluyas saludos, solo responde con el JSON.
     `
 
-  const response = await fetch(`${OLLAMA_URL}/api/generate`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      model,
-      prompt: prompt,
-      stream: false,
-      temperature: 0.2,
-      max_tokens: 100,
-    })
-  })
-
-  if (!response.ok) {
-    const error = await response.text()
-    throw new Error(`Error en DeepSeek: ${error}`)
-  }
-
-  return await response.json()
+  return await DeepSeekClient.generarRespuesta(prompt)
 }
 
 module.exports = {

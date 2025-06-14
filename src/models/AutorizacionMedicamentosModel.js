@@ -19,7 +19,7 @@ const obtenerAutorizacionPorPaciente = async (idPaciente) => {
         FROM Autorizacion_Medicamento am
         INNER JOIN Paciente p ON am.id_paciente = p.id_paciente
         INNER JOIN Medico m ON am.id_medico = m.id_medico
-        WHERE am.id_paciente = $1
+        WHERE am.id_paciente = $1 and fecha_expiracion >= NOW()
         ORDER BY am.fecha_emision DESC`,
         [idPaciente]
     )

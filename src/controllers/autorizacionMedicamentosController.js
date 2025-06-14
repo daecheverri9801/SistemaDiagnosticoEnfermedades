@@ -43,7 +43,7 @@ const obtenerAutorizacionMedicamento = async (req, res) => {
         const Autorizacion = await AutorizacionMedicamentoFacade.obtenerAutorizacionMedicamentoPorPaciente(id)
 
         if (!Autorizacion || Autorizacion.length === 0) {
-            return res.status(404).json({ mensaje: 'No se encontró autorizacion para este paciente.' });
+            return res.status(404).json({ mensaje: 'No hay autorizaciones activas para el paciente o ya expiraron.' });
         }
 
         res.json(Autorizacion)

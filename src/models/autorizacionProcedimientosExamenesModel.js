@@ -23,7 +23,7 @@ const obtenerAutorizacionProcedimientoExamenesPorPaciente = async (idPaciente) =
     FROM autorizacion_examen_procedimiento ape
     INNER JOIN Paciente p ON ape.id_paciente = p.id_paciente
     INNER JOIN Medico m ON ape.id_medico = m.id_medico
-    WHERE ape.id_paciente = $1
+    WHERE ape.id_paciente = $1 AND fecha_expiracion >= NOW()
     ORDER BY ape.fecha_emision DESC`,
         [idPaciente]
     )
