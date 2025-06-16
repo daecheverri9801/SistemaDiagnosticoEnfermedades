@@ -3,10 +3,10 @@ const { generarPdfAutorizacionMedicamento, enviarPdfPorCorreo } = require('../se
 const fs = require('fs');
 
 const generarPdf = async (req, res) => {
-    const { idPaciente } = req.params;
+    const { idAutorizacion } = req.params;
 
     try {
-        const autorizaciones = await AutorizacionMedicamentoFacade.obtenerAutorizacionMedicamentoPorPaciente(idPaciente)
+        const autorizaciones = await AutorizacionMedicamentoFacade.obtenerAutorizacionMedicamentoPorId(idAutorizacion)
 
         if (!autorizaciones || autorizaciones.length === 0) {
             return res.status(404).json({ mensaje: 'No se encontró autorización para este paciente.' })

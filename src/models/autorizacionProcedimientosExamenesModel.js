@@ -30,6 +30,23 @@ const obtenerAutorizacionProcedimientoExamenesPorPaciente = async (idPaciente) =
     return resultado.rows
 }
 
+const obtenerAutorizacionProcedimientoExamenesPorId = async (idAutorizacion) => {
+    const resultado = await pool.query(
+        `SELECT 
+        ape.*, 
+        p.nombre AS nombre_paciente,
+        m.nombre AS nombre_medico
+    FROM autorizacion_examen_procedimiento ape
+    INNER JOIN Paciente p ON ape.id_paciente = p.id_paciente
+    INNER JOIN Medico m ON ape.id_medico = m.id_medico
+    WHERE ape.id_autorizacion = $1 AND fecha_expiracion >= NOW()
+    ORDER BY ape.fecha_emision DESC`,
+        [idAutorizacion]
+    )
+    return resultado.rows
+}
+
+
 const actulizarAutorizacionProcedimientoExamenes = async (idAutorizacion, estado) => {
     const resultado = await pool.query(
         `UPDATE autorizacion_examen_procedimiento SET estado = $1 WHERE id_autorizacion = $2 RETURNING *`,
@@ -46,5 +63,6 @@ module.exports = {
     crearAutorizacionProcedimientoExamenes,
     obtenerAutorizacionProcedimientoExamenesPorPaciente,
     actulizarAutorizacionProcedimientoExamenes,
-    eliminarAutorizacionProcedimientoExamenes
+    eliminarAutorizacionProcedimientoExamenes,
+    obtenerAutorizacionProcedimientoExamenesPorId
 }

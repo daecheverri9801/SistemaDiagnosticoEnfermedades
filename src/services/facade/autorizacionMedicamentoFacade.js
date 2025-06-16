@@ -24,6 +24,18 @@ const obtenerAutorizacionMedicamentoPorPaciente = async (idPaciente) => {
     }
 }
 
+const obtenerAutorizacionMedicamentoPorId = async (idAutorizacion) => {
+    try {
+        const Autorizacion = await AutorizacionMedicamentoModel.obtenerAutorizacionPorId(idAutorizacion)
+        if (!Autorizacion || Autorizacion.length === 0) {
+            throw new Error('No se encontró historial para este id')
+        }
+        return Autorizacion
+    } catch (error) {
+        throw new Error('Error al obtener Autorizacion')   
+    }
+}
+
 const actualizarAutorizacionMedica = async (idAutorizacion, estado) => {
     try {
         const AutorizacionActualizada = await AutorizacionMedicamentoModel.actualizarAutorizacionMedica(idAutorizacion, estado)
@@ -46,5 +58,6 @@ module.exports = {
     crearAutorizacionMedicamento,
     obtenerAutorizacionMedicamentoPorPaciente,
     actualizarAutorizacionMedica,
-    eliminarAutorizacionMedica
+    eliminarAutorizacionMedica,
+    obtenerAutorizacionMedicamentoPorId
 }

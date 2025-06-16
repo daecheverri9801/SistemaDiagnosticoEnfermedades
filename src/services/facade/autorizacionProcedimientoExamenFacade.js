@@ -26,6 +26,18 @@ const obtenerAutorizacionProcedimientoExamenesPorPaciente = async (idPaciente) =
     }
 }
 
+const obtenerAutorizacionProcedimientoExamenesPorId = async (idAutorizacion) => {
+    try {
+        const Autorizacion = await AutorizacionProcedimientoExamenes.obtenerAutorizacionProcedimientoExamenesPorId(idAutorizacion)
+        if (!Autorizacion || Autorizacion.length === 0) {
+            throw new Error('No se encontró autorizacion Procedimiento/examen para este paciente')
+        }
+        return Autorizacion
+    } catch (error) {
+        throw new Error('Error al obtener Autorizacion Procedimiento/examen')   
+    }
+}
+
 const actualizarAutorizacionProcedimientoExamen = async (idAutorizacion, estado) => {
     try {
         const AutorizacionActualizada = await AutorizacionProcedimientoExamenes.actulizarAutorizacionProcedimientoExamenes(idAutorizacion, estado)
@@ -48,5 +60,6 @@ module.exports = {
     crearAutorizacionProcedimientoExamenes,
     obtenerAutorizacionProcedimientoExamenesPorPaciente,
     actualizarAutorizacionProcedimientoExamen,
-    eliminarAutorizacionMedica
+    eliminarAutorizacionMedica,
+    obtenerAutorizacionProcedimientoExamenesPorId
 }

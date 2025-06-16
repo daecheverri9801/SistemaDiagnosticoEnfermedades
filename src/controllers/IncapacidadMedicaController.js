@@ -3,16 +3,16 @@ const { generarPdfIncapacidad, enviarPdfPorCorreo } = require('../services/Incap
 const fs = require('fs');
 
 const generarPdf = async (req, res) => {
-    const { idPaciente } = req.params;
+    const { idIncapacidad } = req.params;
 
     try {
-        const incapacidades = await incapacidadMedica.obtenerIncapacidadesPorPaciente(idPaciente)
+        const incapacidad = await incapacidadMedica.obtenerIncapacidadesPorId(idIncapacidad)
 
-        if (!incapacidades || incapacidades.length === 0) {
-            return res.status(404).json({ mensaje: 'No se encontró incapacidad para este paciente.' })
+        console.log(incapacidad)
+
+        if (!incapacidad) {
+            return res.status(404).json({ mensaje: 'No se encontró incapacidad para este id.' })
         }
-
-        const incapacidad = incapacidades[0];
 
         const pdfPath = await generarPdfIncapacidad({
             nombrePaciente: incapacidad.nombre_paciente || 'Paciente desconocido',
@@ -36,13 +36,12 @@ const enviarIncapacidadPorCorreo = async (req, res) => {
     const { emailDestino } = req.body
 
     try {
-        const incapacidades = await incapacidadMedica.obtenerIncapacidadesPorPaciente(id)
-
-        if (!incapacidades || incapacidades.length === 0) {
+        const incapacidad = await incapacidadMedica.obtenerIncapacidadesPorId(id)
+        
+        if (!incapacidad || incapacidades.length === 0) {
             return res.status(404).json({ mensaje: 'No se encontró la incapacidad.' })
         }
 
-        const incapacidad = incapacidades[0];
 
         const pdfPath = await generarPdfIncapacidad({
             nombrePaciente: incapacidad.nombre_paciente || 'Paciente desconocido',

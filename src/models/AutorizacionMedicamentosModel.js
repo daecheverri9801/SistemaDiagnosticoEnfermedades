@@ -26,6 +26,22 @@ const obtenerAutorizacionPorPaciente = async (idPaciente) => {
     return resultado.rows
 }
 
+const obtenerAutorizacionPorId = async (idAutorizacion) => {
+    const resultado = await pool.query(
+        `SELECT 
+            am.*, 
+            p.nombre AS nombre_paciente,
+            m.nombre AS nombre_medico
+        FROM Autorizacion_Medicamento am
+        INNER JOIN Paciente p ON am.id_paciente = p.id_paciente
+        INNER JOIN Medico m ON am.id_medico = m.id_medico
+        WHERE am.id_autorizacion = $1 and fecha_expiracion >= NOW()
+        ORDER BY am.fecha_emision DESC`,
+        [idAutorizacion]
+    )
+    return resultado.rows
+}
+
 const actualizarAutorizacionMedica = async (idAutorizacion, estado) => {
     const resultado = await pool.query(
         `UPDATE Autorizacion_Medicamento SET estado = $1 WHERE id_autorizacion = $2 RETURNING *`,
@@ -42,5 +58,6 @@ module.exports = {
     crearAutorizacionMedicamento,
     obtenerAutorizacionPorPaciente,
     actualizarAutorizacionMedica,
-    eliminarAutorizacionMedica
+    eliminarAutorizacionMedica,
+    obtenerAutorizacionPorId
 }
