@@ -2,7 +2,6 @@ tabla paciente
 CREATE TABLE paciente (
     id_paciente SERIAL PRIMARY KEY,
     usuario VARCHAR(50),
-    contraseña VARCHAR(100),
     nombre VARCHAR(100),
     cedula VARCHAR(20),
     correo_electronico VARCHAR(100),
@@ -57,7 +56,7 @@ CREATE TABLE autorizacion_examen_procedimiento (
     tipo VARCHAR(100),
     description TEXT,
     fecha_emision TIMESTAMP WITHOUT TIME ZONE,
-    fecha_expiracio DATE,
+    fecha_expiracion DATE,
     instrucciones TEXT,
     estado VARCHAR(20) DEFAULT 'ACTIVA'
 );
@@ -73,7 +72,7 @@ CREATE TABLE autorizacion_medicamento (
     frecuencia TEXT,
     duracion TEXT,
     fecha_emision TIMESTAMP WITHOUT TIME ZONE,
-    fecha_expiracio DATE,
+    fecha_expiracion DATE,
     justificacion TEXT,
     estado VARCHAR(20) DEFAULT 'ACTIVA'
 );
@@ -87,9 +86,9 @@ CREATE TABLE incapacidad_medica (
     fecha_emision TIMESTAMP WITHOUT TIME ZONE,
     fecha_inicio DATE,
     fecha_fin DATE,
-    dias_incapacida INTEGER,
+    dias_incapacidad INTEGER,
     diagnostico TEXT,
-    recomendacion TEXT,
+    recomendaciones TEXT,
     estado VARCHAR(20) DEFAULT 'ACTIVA'
 );
 
@@ -99,6 +98,6 @@ CREATE TABLE recuperacion_contraseña (
     id_paciente INTEGER REFERENCES paciente(id_paciente),
     token VARCHAR(100),
     fecha_creacion TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    fecha_expiracior TIMESTAMP WITHOUT TIME ZONE,
+    fecha_expiracion TIMESTAMP WITHOUT TIME ZONE,
     utilizado BOOLEAN DEFAULT false
 );
