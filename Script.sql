@@ -54,7 +54,7 @@ CREATE TABLE autorizacion_examen_procedimiento (
     id_medico INTEGER REFERENCES medico(id_medico),
     id_consulta INTEGER REFERENCES consulta(id_consulta),
     tipo VARCHAR(100),
-    description TEXT,
+    descripcion TEXT,
     fecha_emision TIMESTAMP WITHOUT TIME ZONE,
     fecha_expiracion DATE,
     instrucciones TEXT,
