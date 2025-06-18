@@ -18,6 +18,9 @@ CREATE TABLE medico (
     especialidad VARCHAR(100),
     registro_medico VARCHAR(50),
     correo_electronico VARCHAR(100),
+    cedula VARCHAR(20), 
+    direccion VARCHAR(100),
+    celular VARCHAR(20);
     idauth TEXT
 );
 
