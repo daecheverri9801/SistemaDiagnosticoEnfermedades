@@ -104,3 +104,12 @@ CREATE TABLE recuperacion_contraseña (
     fecha_expiracion TIMESTAMP WITHOUT TIME ZONE,
     utilizado BOOLEAN DEFAULT false
 );
+
+tabla cita_medica
+CREATE TABLE cita_medica (
+    id_cita SERIAL PRIMARY KEY,
+    id_paciente INTEGER NOT NULL REFERENCES paciente(id_paciente),
+    id_medico INTEGER NOT NULL REFERENCES medico(id_medico),
+    fecha_cita TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    motivo TEXT
+);
