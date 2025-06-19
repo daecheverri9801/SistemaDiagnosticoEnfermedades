@@ -20,7 +20,7 @@ CREATE TABLE medico (
     correo_electronico VARCHAR(100),
     cedula VARCHAR(20), 
     direccion VARCHAR(100),
-    celular VARCHAR(20);
+    celular VARCHAR(20),
     idauth TEXT
 );
 
